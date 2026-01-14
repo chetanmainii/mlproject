@@ -84,12 +84,12 @@ class ModelTrainer:
             }
             
             logging.info(f"Evaluating models - {list(models.keys())} on basis of R2 score")
-            result:dict=evaluate_model(models=models,params=tuning,x_train=x_train,x_test=x_test,y_train=y_train,y_test=y_test)
+            result,fitted_models=evaluate_model(models=models,params=tuning,x_train=x_train,x_test=x_test,y_train=y_train,y_test=y_test)
             
             logging.info("Choosing the model with best r2 score")
             best_r2_score=max(sorted(list(result.values())))
             model_name=list(result.keys())[list(result.values()).index(best_r2_score)]
-            model=models[model_name]
+            model=fitted_models[model_name]
             
             logging.info("Saving the model.pkl")
             save_obj(

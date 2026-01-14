@@ -16,6 +16,13 @@ def save_obj(filepath,obj):
     except Exception as e:
         raise CustomException(e,sys)
     
+def load_obj(filepath):
+    try:
+        with open(filepath,"rb") as file:
+            return dill.load(file)
+    except Exception as e:
+        raise CustomException(e,sys)
+    
 def categorize_features(df):
         return {
             'categorical':[f for f in df.columns if df[f].dtype=='object'],
@@ -23,13 +30,14 @@ def categorize_features(df):
         }
         
 def evaluate_model(models,params,x_train,x_test,y_train,y_test):
-    d={}
+    score_dict={}
+    fitted_models={}
     for name,model in models.items():
         gs=GridSearchCV(estimator=model,param_grid=params.get(name,{}),n_jobs=-1,cv=3)
         gs.fit(x_train,y_train)
         model=gs.best_estimator_
-        model.fit(x_train,y_train)
         xtestp=model.predict(x_test)
         score=r2_score(y_test,xtestp)
-        d[name]=score
-    return d
+        score_dict[name]=score
+        fitted_models[name]=model
+    return score_dict,fitted_models

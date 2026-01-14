@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Performance Predictor</title>
+</head>
+<body>
+
+<h2>Enter Student Details</h2>
+
+<form action="/predict" method="post">
+
+    Gender:
+    <select name="gender" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+    </select><br><br>
+
+    Race / Ethnicity:
+    <select name="race" required>
+        <option value="group A">Group A</option>
+        <option value="group B">Group B</option>
+        <option value="group C">Group C</option>
+        <option value="group D">Group D</option>
+        <option value="group E">Group E</option>
+    </select><br><br>
+
+    Parental Education:
+    <select name="parent_edu" required>
+        <option value="high school">High School</option>
+        <option value="some college">Some College</option>
+        <option value="associate's degree">Associate's Degree</option>
+        <option value="bachelor's degree">Bachelor's Degree</option>
+        <option value="master's degree">Master's Degree</option>
+    </select><br><br>
+
+    Lunch:
+    <select name="lunch" required>
+        <option value="standard">Standard</option>
+        <option value="free/reduced">Free / Reduced</option>
+    </select><br><br>
+
+    Test Preparation:
+    <select name="prep_course" required>
+        <option value="none">None</option>
+        <option value="completed">Completed</option>
+    </select><br><br>
+
+    Reading Score:
+    <input type="number" name="reading_score" min="0" max="100" required><br><br>
+
+    Writing Score:
+    <input type="number" name="writing_score" min="0" max="100" required><br><br>
+
+    <button type="submit">Predict</button>
+
+</form>
+
+{% if result is not none %}
+    <h3>Predicted Math Score: {{ result }}</h3>
+{% endif %}
+
+</body>
+</html>
